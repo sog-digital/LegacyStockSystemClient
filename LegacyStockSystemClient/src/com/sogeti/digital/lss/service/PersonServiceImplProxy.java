@@ -50,22 +50,22 @@ public class PersonServiceImplProxy implements com.sogeti.digital.lss.service.Pe
     return personServiceImpl.update(person);
   }
   
-  public com.sogeti.digital.lss.model.Person read(int id) throws java.rmi.RemoteException{
+  public com.sogeti.digital.lss.model.Person read(java.lang.String email) throws java.rmi.RemoteException{
     if (personServiceImpl == null)
       _initPersonServiceImplProxy();
-    return personServiceImpl.read(id);
-  }
-  
-  public boolean login(java.lang.String email, java.lang.String password) throws java.rmi.RemoteException{
-    if (personServiceImpl == null)
-      _initPersonServiceImplProxy();
-    return personServiceImpl.login(email, password);
+    return personServiceImpl.read(email);
   }
   
   public boolean changePassword(com.sogeti.digital.lss.model.Person person) throws java.rmi.RemoteException{
     if (personServiceImpl == null)
       _initPersonServiceImplProxy();
     return personServiceImpl.changePassword(person);
+  }
+  
+  public boolean login(java.lang.String email, java.lang.String password) throws java.rmi.RemoteException{
+    if (personServiceImpl == null)
+      _initPersonServiceImplProxy();
+    return personServiceImpl.login(email, password);
   }
   
   

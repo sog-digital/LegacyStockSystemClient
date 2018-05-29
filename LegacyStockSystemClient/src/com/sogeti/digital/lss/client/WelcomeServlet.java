@@ -27,7 +27,7 @@ public class WelcomeServlet extends HttpServlet {
             
             //out.println("<h2>Welcome user your email is:  "+ request.getParameter("email") +"</h2>");
         	
-        	  RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
+        	  RequestDispatcher rd = request.getRequestDispatcher("welcome.jsp");
               rd.include(request, response);
         	
         } finally {            

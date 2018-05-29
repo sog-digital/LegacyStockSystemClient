@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 
+import com.sogeti.digital.lss.model.Person;
 import com.sogeti.digital.lss.service.PersonServiceImpl;
 import com.sogeti.digital.lss.service.PersonServiceImplServiceLocator;
 
@@ -20,6 +21,7 @@ import com.sogeti.digital.lss.service.PersonServiceImplServiceLocator;
 @WebServlet("/ValidateLoginDetails")
 public class ValidateLoginDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String errorStr = "Sorry! Login details do not match. Please try again.";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -41,21 +43,26 @@ public class ValidateLoginDetails extends HttpServlet {
 	     PrintWriter out = response.getWriter();
 	     
 	     try {
-	    	 String name = request.getParameter("email");
+	    	 String email = request.getParameter("email");
 	    	 String password = request.getParameter("pwd");
 
 	    	 PersonServiceImplServiceLocator psl = new PersonServiceImplServiceLocator();
 	    	 PersonServiceImpl psi = psl.getPersonServiceImpl();
 
-	    	 if(psi.login(name, password))
-	    	 {
+	    	 if(psi.login(email, password))
+	    	 {	
+	    		 Person person = psi.read(email);
+	    		 request.setAttribute("firstname", person.getFirstName());
+	    		 request.setAttribute("lastname", person.getLastName());
+	    		 request.setAttribute("dob", person.getDob());
 	    		 RequestDispatcher rd = request.getRequestDispatcher("Welcome");
 	    		 rd.forward(request, response);
 	    	 }
 	    	 else
 	    	 {
-	    		 out.println("<font color='red' style='margin-left: 80px;'><b>Sorry! Login details do not match. Please try again.</b></font>");
-	    		 RequestDispatcher rd = request.getRequestDispatcher("login.html");
+	    		 //out.println("<font color='red' style='margin-left: 80px;'><b>Sorry! Login details do not match. Please try again.</b></font>");
+	    		 request.setAttribute("errorStr", errorStr);
+	    		 RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 	    		 rd.include(request, response);
 	    	 }
 	     } catch(ServiceException se) {
