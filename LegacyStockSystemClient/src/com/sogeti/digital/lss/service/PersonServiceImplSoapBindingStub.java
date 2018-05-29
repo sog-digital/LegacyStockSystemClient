@@ -36,7 +36,7 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("read");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "email"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://model.lss.digital.sogeti.com", "Person"));
         oper.setReturnClass(com.sogeti.digital.lss.model.Person.class);
@@ -44,6 +44,17 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[1] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("changePassword");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "person"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://model.lss.digital.sogeti.com", "Person"), com.sogeti.digital.lss.model.Person.class, false, false);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
+        oper.setReturnClass(boolean.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "changePasswordReturn"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[2] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("login");
@@ -54,17 +65,6 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
         oper.setReturnQName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "loginReturn"));
-        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[2] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("changePassword");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "person"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://model.lss.digital.sogeti.com", "Person"), com.sogeti.digital.lss.model.Person.class, false, false);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
-        oper.setReturnClass(boolean.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "changePasswordReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[3] = oper;
@@ -207,7 +207,7 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
 }
     }
 
-    public com.sogeti.digital.lss.model.Person read(int id) throws java.rmi.RemoteException {
+    public com.sogeti.digital.lss.model.Person read(java.lang.String email) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -223,7 +223,7 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(id)});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {email});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -241,7 +241,7 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
 }
     }
 
-    public boolean login(java.lang.String email, java.lang.String password) throws java.rmi.RemoteException {
+    public boolean changePassword(com.sogeti.digital.lss.model.Person person) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -253,11 +253,11 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "login"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "changePassword"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {email, password});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {person});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -275,7 +275,7 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
 }
     }
 
-    public boolean changePassword(com.sogeti.digital.lss.model.Person person) throws java.rmi.RemoteException {
+    public boolean login(java.lang.String email, java.lang.String password) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -287,11 +287,11 @@ public class PersonServiceImplSoapBindingStub extends org.apache.axis.client.Stu
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "changePassword"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.lss.digital.sogeti.com", "login"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {person});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {email, password});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
