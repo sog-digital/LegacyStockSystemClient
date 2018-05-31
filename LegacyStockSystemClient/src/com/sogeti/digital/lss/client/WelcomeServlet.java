@@ -24,9 +24,6 @@ public class WelcomeServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            
-            //out.println("<h2>Welcome user your email is:  "+ request.getParameter("email") +"</h2>");
-        	
         	  RequestDispatcher rd = request.getRequestDispatcher("welcome.jsp");
               rd.include(request, response);
         	
