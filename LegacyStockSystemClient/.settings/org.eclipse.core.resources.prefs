@@ -1,6 +1,11 @@
 eclipse.preferences.version=1
 encoding//src/com/sogeti/digital/lss/model/Person.java=UTF-8
+encoding//src/com/sogeti/digital/lss/model/Product.java=UTF-8
 encoding//src/com/sogeti/digital/lss/service/PersonServiceImpl.java=UTF-8
 encoding//src/com/sogeti/digital/lss/service/PersonServiceImplService.java=UTF-8
 encoding//src/com/sogeti/digital/lss/service/PersonServiceImplServiceLocator.java=UTF-8
 encoding//src/com/sogeti/digital/lss/service/PersonServiceImplSoapBindingStub.java=UTF-8
+encoding//src/com/sogeti/digital/lss/service/StockServiceImpl.java=UTF-8
+encoding//src/com/sogeti/digital/lss/service/StockServiceImplService.java=UTF-8
+encoding//src/com/sogeti/digital/lss/service/StockServiceImplServiceLocator.java=UTF-8
+encoding//src/com/sogeti/digital/lss/service/StockServiceImplSoapBindingStub.java=UTF-8

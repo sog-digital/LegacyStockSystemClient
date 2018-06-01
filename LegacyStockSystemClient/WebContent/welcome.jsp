@@ -22,7 +22,7 @@
 	border-width: 5px;
  	padding: 50px 0;
  	width: 45%;
-   	height:300px 
+   	height:350px 
 }
 
 #changePassDiv {
@@ -32,19 +32,33 @@
 	margin-left: 30px
 }
 
+#stockDiv {
+	display:none;
+	padding: 50px 0;
+	align-self: centre;
+	margin-left: 150px
+}
+
 </style>
 
 <script>
-function displayChangePassDiv() {
-    var x = document.getElementById("changePassDiv");
+
+function displaySubDiv(id) {
+    var x = document.getElementById(id);
     x.style.display = "block";
-    hideMessages();
-}
+    
 
-function hideMessages() {
-
-    var x = document.getElementById("appMsgDiv");
-    x.style.display = "none";
+    var subDivs = document.getElementById('borderDiv').querySelectorAll("Div");
+    
+	
+    for( var i=0; i<subDivs.length; i++) {
+    
+    	if( subDivs[i].id != id ) {
+    	
+    		document.getElementById(subDivs[i].id).style.display = 'none';
+    	}
+    }		
+    
 }
 
 </script>
@@ -58,9 +72,10 @@ function hideMessages() {
 
 
 <h2>Welcome <%=request.getAttribute("firstname") %> <%=request.getAttribute("lastname") %>. Your dob is <%=request.getAttribute("dob") %>.
-<input type="button" name="changePass" value="Change Password" onclick="displayChangePassDiv()">
+<input type="button" name="changePass" value="Change Password" onclick="displaySubDiv('changePassDiv')">
 </h2> 
 <br>
+<h2>Create a New Stock &nbsp;&nbsp;<input type="button" name="createStock" value="Go" onclick="displaySubDiv('stockDiv')"></h2>
 <br>
 <br>
 <br>
@@ -118,6 +133,62 @@ function hideMessages() {
 		</form>
 	
 	</div>
+
+	<div id="stockDiv">
+	
+	
+		<form method="post" action="ManageStock">
+		
+		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
+		<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">
+		<input type="hidden" name="lastName" value="<%=request.getAttribute("lastname") %>">
+		<input type="hidden" name="dob" value="<%=request.getAttribute("dob") %>">
+		
+		<table>
+		<tr>
+		<td style="text-align: right;"><h3> Product ID </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="productID" disabled> </td>
+		<td> </td>
+		<td> </td>
+		</tr>
+
+		<tr>
+		<td style="text-align:right;"> <h3> Name </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="name"></td>
+		<td> &nbsp;&nbsp;</td>
+		<td> </td>
+		</tr>
+		
+		<tr>
+		<td style="text-align: right;"><h3> Price </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="price"> </td>
+		<td> </td>
+		<td> </td>
+		</tr>
+		
+		<tr>
+		<td style="text-align: right;"><h3> Amount </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="amount"> </td>
+		<td> </td>
+		<td> </td>
+		</tr>
+		
+		
+		</table>
+		<br>
+		<br>
+		<input type="submit" value="Save"> 
+		
+		</form>
+	
+	</div>
+
+
+
 
 </div>
 
