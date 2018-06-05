@@ -44,10 +44,11 @@ public class ChangePassword extends HttpServlet {
 	    PrintWriter out = response.getWriter();
 	    
 	    String newpassword = request.getParameter("pwd");
-	    String personId = request.getParameter("personId");
-	    String firstName = request.getParameter("firstName");
-	    String lastName = request.getParameter("lastName");
-	    String dob = request.getParameter("dob");
+	    
+		request.setAttribute("firstname", request.getParameter("firstName"));
+		request.setAttribute("lastname", request.getParameter("lastName"));
+		request.setAttribute("dob",  request.getParameter("dob"));
+		request.setAttribute("personId", request.getParameter("personId"));
 	    
 	    try {
 
@@ -55,15 +56,11 @@ public class ChangePassword extends HttpServlet {
 	    	PersonServiceImpl psi = psl.getPersonServiceImpl();
 
 	    	Person person = new Person();
-	    	person.setId(Integer.parseInt(personId));
+	    	person.setId(Integer.parseInt(request.getParameter("personId")));
 	    	person.setPassword(newpassword);
 	    	
 	    	if(psi.changePassword(person)) {
 	    		
-	    		 request.setAttribute("firstname", firstName);
-	    		 request.setAttribute("lastname", lastName);
-	    		 request.setAttribute("dob", dob);
-	    		 request.setAttribute("personId", personId);
 	    		 request.setAttribute("infoStr", infoMsgStr);
 	    		 
 	    	} else {	
