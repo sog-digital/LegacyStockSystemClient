@@ -44,12 +44,6 @@ public class PersonServiceImplProxy implements com.sogeti.digital.lss.service.Pe
     return personServiceImpl;
   }
   
-  public boolean update(com.sogeti.digital.lss.model.Person person) throws java.rmi.RemoteException{
-    if (personServiceImpl == null)
-      _initPersonServiceImplProxy();
-    return personServiceImpl.update(person);
-  }
-  
   public com.sogeti.digital.lss.model.Person read(java.lang.String email) throws java.rmi.RemoteException{
     if (personServiceImpl == null)
       _initPersonServiceImplProxy();

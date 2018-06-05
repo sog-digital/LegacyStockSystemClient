@@ -137,7 +137,7 @@ function displaySubDiv(id) {
 	<div id="stockDiv">
 	
 	
-		<form method="post" action="ManageStock">
+		<form method="post" action="Stock">
 		
 		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
 		<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">

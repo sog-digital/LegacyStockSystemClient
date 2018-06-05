@@ -20,18 +20,18 @@ import com.sogeti.digital.lss.service.StockServiceImplServiceLocator;
  */
 @WebServlet("/ManageStock")
 public class ManageStock extends HttpServlet {
-	
+
 	private static final String infoMsgStr = "Your request was successfull.";
 	private static final String errorStr = "Sorry! Error in processing your request.";
-	
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ManageStock() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ManageStock() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,49 +39,42 @@ public class ManageStock extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+
 		response.setContentType("text/html;charset=UTF-8");
-		 
-	    PrintWriter out = response.getWriter();
-	    
-	   
-	    String personId = request.getParameter("personId");
-	    String firstName = request.getParameter("firstName");
-	    String lastName = request.getParameter("lastName");
-	    String dob = request.getParameter("dob");
-	    
-	    try {
 
-	    	StockServiceImplServiceLocator ssl = new StockServiceImplServiceLocator();
-	    	StockServiceImpl ssi = ssl.getStockServiceImpl();
+		PrintWriter out = response.getWriter();
 
-	    	Product product = new Product();
-	    	product.setName(request.getParameter("name"));
-	    	product.setAmount(Integer.parseInt((String)request.getParameter("amount")));
-	    	product.setPrice(request.getParameter("price"));
-	    		    	
-	    	if(ssi.create(product)) {
-	    		
-	    		 request.setAttribute("firstname", firstName);
-	    		 request.setAttribute("lastname", lastName);
-	    		 request.setAttribute("dob", dob);
-	    		 request.setAttribute("personId", personId);
-	    		 request.setAttribute("infoStr", infoMsgStr);
-	    		 
-	    	} else {	
-	    		
-	    		 request.setAttribute("errorStr", errorStr);
-	    	}
+		request.setAttribute("firstname", request.getParameter("firstName"));
+		request.setAttribute("lastname", request.getParameter("lastName"));
+		request.setAttribute("dob",  request.getParameter("dob"));
+		request.setAttribute("personId", request.getParameter("personId"));
 
-   		 RequestDispatcher rd = request.getRequestDispatcher("Welcome");
-   		 rd.forward(request, response);
+		try {
 
+			StockServiceImplServiceLocator ssl = new StockServiceImplServiceLocator();
+			StockServiceImpl ssi = ssl.getStockServiceImpl();
 
-	    } catch(ServiceException se) {
-	    	System.out.println("ServiceException " + se.getMessage());
-	    } finally {            
-	    	out.close();
-	    }
+			Product product = new Product();
+			product.setName(request.getParameter("name"));
+			product.setAmount(Integer.parseInt((String)request.getParameter("amount")));
+			product.setPrice(request.getParameter("price"));
+
+			if(ssi.create(product)) {
+
+				request.setAttribute("infoStr", infoMsgStr);
+			} else {	
+
+				request.setAttribute("errorStr", errorStr);
+			}
+
+			RequestDispatcher rd = request.getRequestDispatcher("Welcome");
+			rd.forward(request, response);
+
+		} catch(ServiceException se) {
+			System.out.println("ServiceException " + se.getMessage());
+		} finally {            
+			out.close();
+		}
 	}
 
 	/**

@@ -18,7 +18,7 @@
   </servlet>
   
    <servlet>
-    <servlet-name>ManageStock</servlet-name>
+    <servlet-name>Stock</servlet-name>
     <servlet-class>com.sogeti.digital.lss.client.ManageStock</servlet-class>
   </servlet>
   
@@ -35,7 +35,7 @@
     <url-pattern>/ChangePass</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>ManageStock</servlet-name>
-    <url-pattern>/ManageStock</url-pattern>
+    <servlet-name>Stock</servlet-name>
+    <url-pattern>/Stock</url-pattern>
   </servlet-mapping>
 </web-app>
