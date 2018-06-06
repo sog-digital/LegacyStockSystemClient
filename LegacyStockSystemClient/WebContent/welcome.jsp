@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.sogeti.digital.lss.model.Product"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,6 +40,13 @@
 	margin-left: 150px
 }
 
+#createStockDiv {
+	display:none;
+	padding: 50px 0;
+	align-self: centre;
+	margin-left: 150px
+}
+
 </style>
 
 <script>
@@ -61,6 +69,7 @@ function displaySubDiv(id) {
     
 }
 
+
 </script>
 
 
@@ -72,11 +81,17 @@ function displaySubDiv(id) {
 
 
 <h2>Welcome <%=request.getAttribute("firstname") %> <%=request.getAttribute("lastname") %>. Your dob is <%=request.getAttribute("dob") %>.
-<input type="button" name="changePass" value="Change Password" onclick="displaySubDiv('changePassDiv')">
+&nbsp;&nbsp;<input type="button" name="changePass" value="Change Password" onclick="displaySubDiv('changePassDiv')">
 </h2> 
-<br>
-<h2>Create a New Stock &nbsp;&nbsp;<input type="button" name="createStock" value="Go" onclick="displaySubDiv('stockDiv')"></h2>
-<br>
+<h3>Create a New Stock &nbsp;&nbsp;<input type="button" name="createStock" value="Go" onclick="displaySubDiv('createStockDiv')"></h3>
+<form method="post" action="Stock">
+		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
+		<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">
+		<input type="hidden" name="lastName" value="<%=request.getAttribute("lastname") %>">
+		<input type="hidden" name="dob" value="<%=request.getAttribute("dob") %>">
+
+<h3>Enter Stock ID &nbsp;&nbsp;<input type="number" name="productID" min="1">&nbsp;&nbsp; <input type="submit" name="findStock" value="Go"></h3>
+</form>
 <br>
 <br>
 
@@ -93,7 +108,26 @@ function displaySubDiv(id) {
     {
         infoStr="";
     }
+    
+    Product product = (Product)request.getAttribute("stock");
+    boolean stockFound = false;
+    String productID = "";
+    String productName ="";
+    String amount ="";
+    String price ="";
+    
+    if( product != null ) {
+		stockFound = true;
+		productID = String.valueOf(product.getId());
+		productName = product.getName();
+		amount = String.valueOf( product.getAmount());
+		price = product.getPrice();
+    } 
+    
     %>
+    
+    
+    
 
 	<div id="appMsgDiv">
 		<font color='red' style='margin-left: 80px;'><b><% out.println(errorStr); %></b></font>
@@ -135,8 +169,58 @@ function displaySubDiv(id) {
 	</div>
 
 	<div id="stockDiv">
+
+		<form method="post" action="Stock">
+		
+		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
+		<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">
+		<input type="hidden" name="lastName" value="<%=request.getAttribute("lastname") %>">
+		<input type="hidden" name="dob" value="<%=request.getAttribute("dob") %>">
+		
+		<table>
+		<tr>
+		<td style="text-align: right;"><h3> Product ID </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="productID" disabled value="<%=productID %>"> </td>
+		<td> </td>
+		<td> </td>
+		</tr>
+
+		<tr>
+		<td style="text-align:right;"> <h3> Name </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="name" value="<%=productName %>"></td>
+		<td> &nbsp;&nbsp;</td>
+		<td> </td>
+		</tr>
+		
+		<tr>
+		<td style="text-align: right;"><h3> Price </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="price" value="<%=price %>"> </td>
+		<td> </td>
+		<td> </td>
+		</tr>
+		
+		<tr>
+		<td style="text-align: right;"><h3> Amount </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="amount" value="<%=amount %>"> </td>
+		<td> </td>
+		<td> </td>
+		</tr>
+		
+		</table>
+		<br>
+		<br>
+		<input type="submit" value="Save"> 
+		
+		</form>
 	
+	</div>
 	
+		<div id="createStockDiv">
+
 		<form method="post" action="Stock">
 		
 		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
@@ -177,7 +261,6 @@ function displaySubDiv(id) {
 		<td> </td>
 		</tr>
 		
-		
 		</table>
 		<br>
 		<br>
@@ -186,6 +269,7 @@ function displaySubDiv(id) {
 		</form>
 	
 	</div>
+	
 
 
 
@@ -193,6 +277,19 @@ function displaySubDiv(id) {
 </div>
 
 </Div>
+
+<% if(stockFound) { %>
+    
+    <script>
+    	
+    	document.getElementById('stockDiv').style.display = "block";
+    
+    </script>
+
+    
+    <%
+       }  
+    %>
 
 </body>
 </html>

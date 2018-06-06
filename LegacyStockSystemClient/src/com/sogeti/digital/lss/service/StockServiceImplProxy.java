@@ -50,5 +50,11 @@ public class StockServiceImplProxy implements com.sogeti.digital.lss.service.Sto
     return stockServiceImpl.create(product);
   }
   
+  public com.sogeti.digital.lss.model.Product getStock(int id) throws java.rmi.RemoteException{
+    if (stockServiceImpl == null)
+      _initStockServiceImplProxy();
+    return stockServiceImpl.getStock(id);
+  }
+  
   
 }
