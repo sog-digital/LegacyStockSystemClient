@@ -23,6 +23,8 @@ public class ManageStock extends HttpServlet {
 
 	private static final String infoMsgStr = "Your request was successfull.";
 	private static final String errorStr = "Sorry! Error in processing your request.";
+	private static final String stockNotFoundMsgStr = "Sorry! No records found for your stock search. ";
+	
 
 
 	/**
@@ -48,25 +50,51 @@ public class ManageStock extends HttpServlet {
 		request.setAttribute("lastname", request.getParameter("lastName"));
 		request.setAttribute("dob",  request.getParameter("dob"));
 		request.setAttribute("personId", request.getParameter("personId"));
+		
+		int productID = 0;
+		
+		String productIDParam = request.getParameter("productID");
+		
+		if( productIDParam != null && !productIDParam.equals("null") && productIDParam.length() > 0 ) {
+			
+			productID = Integer.parseInt(productIDParam);
+		}
+		
 
 		try {
 
 			StockServiceImplServiceLocator ssl = new StockServiceImplServiceLocator();
 			StockServiceImpl ssi = ssl.getStockServiceImpl();
+			
+		
+			if( productID > 0 ) {
+				// find a stock 
+				
+				Product product = ssi.getStock(productID);
+				
+				if( product != null ) {
+					
+					request.setAttribute("stock", product);
+				} else {
+					request.setAttribute("infoStr", stockNotFoundMsgStr);
+				}
+				
+			} else {
+				// create a stock
+				Product product = new Product();
+				product.setName(request.getParameter("name"));
+				product.setAmount(Integer.parseInt((String)request.getParameter("amount")));
+				product.setPrice(request.getParameter("price"));
 
-			Product product = new Product();
-			product.setName(request.getParameter("name"));
-			product.setAmount(Integer.parseInt((String)request.getParameter("amount")));
-			product.setPrice(request.getParameter("price"));
+				if(ssi.create(product)) {
 
-			if(ssi.create(product)) {
+					request.setAttribute("infoStr", infoMsgStr);
+				} else {	
 
-				request.setAttribute("infoStr", infoMsgStr);
-			} else {	
-
-				request.setAttribute("errorStr", errorStr);
+					request.setAttribute("errorStr", errorStr);
+				}
 			}
-
+			
 			RequestDispatcher rd = request.getRequestDispatcher("Welcome");
 			rd.forward(request, response);
 
