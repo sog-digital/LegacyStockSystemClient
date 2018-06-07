@@ -60,6 +60,13 @@ public class ManageStock extends HttpServlet {
 			productID = Integer.parseInt(productIDParam);
 		}
 		
+		String allStocks = request.getParameter("allStocks");
+		
+		if( !(allStocks != null && !allStocks.equals("null") && allStocks.length() > 0 ) ) {
+			
+			allStocks = "";
+		}
+		
 
 		try {
 
@@ -78,6 +85,17 @@ public class ManageStock extends HttpServlet {
 				} else {
 					request.setAttribute("infoStr", stockNotFoundMsgStr);
 				}
+				
+			} else if ( allStocks.length() > 0 ) {
+				
+				Product[] productList = ssi.getAllTheStocks();
+				if(productList != null ) {
+					
+					request.setAttribute("allStocks", productList);
+				} else {
+					request.setAttribute("infoStr", stockNotFoundMsgStr);
+				}
+				
 				
 			} else {
 				// create a stock
