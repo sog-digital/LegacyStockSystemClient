@@ -10,4 +10,5 @@ package com.sogeti.digital.lss.service;
 public interface StockServiceImpl extends java.rmi.Remote {
     public boolean create(com.sogeti.digital.lss.model.Product product) throws java.rmi.RemoteException;
     public com.sogeti.digital.lss.model.Product getStock(int id) throws java.rmi.RemoteException;
+    public com.sogeti.digital.lss.model.Product[] getAllTheStocks() throws java.rmi.RemoteException;
 }

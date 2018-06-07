@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="com.sogeti.digital.lss.model.Product"%>    
+<%@ page import="com.sogeti.digital.lss.model.Product"%>   
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Arrays"%>
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,9 +24,12 @@
 	borderborder-color:black; 
 	border-style:solid; 
 	border-width: 5px;
- 	padding: 50px 0;
+ 	padding: 40px 0;
  	width: 45%;
-   	height:350px 
+   	 
+   	
+   flex-direction: column;
+   min-height: 40vh;
 }
 
 #changePassDiv {
@@ -44,6 +50,13 @@
 	display:none;
 	padding: 50px 0;
 	align-self: centre;
+	margin-left: 150px
+}
+
+#allStocksDiv {
+	display:none;
+	padding: 50px 0;
+	align-self: center;
 	margin-left: 150px
 }
 
@@ -92,7 +105,16 @@ function displaySubDiv(id) {
 
 <h3>Enter Stock ID &nbsp;&nbsp;<input type="number" name="productID" min="1">&nbsp;&nbsp; <input type="submit" name="findStock" value="Go"></h3>
 </form>
-<br>
+<form method="post" action="Stock">
+		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
+		<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">
+		<input type="hidden" name="lastName" value="<%=request.getAttribute("lastname") %>">
+		<input type="hidden" name="dob" value="<%=request.getAttribute("dob") %>">
+		<input type="hidden" name="allStocks" value="allStocks">
+
+<h3>Retrieve all Stocks &nbsp;&nbsp;<input type="submit" name="getAllStocks" value="Go"></h3>
+</form>
+
 <br>
 
 <div id="borderDiv">
@@ -124,6 +146,15 @@ function displaySubDiv(id) {
 		price = product.getPrice();
     } 
     
+    
+    Product[] productList = (Product[])request.getAttribute("allStocks");
+    boolean displayAllStocks = false;
+    List<Product> productListAsList = null;
+    if( productList != null && productList.length > 0 ) {
+    	displayAllStocks = true;
+    	productListAsList = Arrays.asList(productList);
+    }
+  
     %>
     
     
@@ -270,9 +301,46 @@ function displaySubDiv(id) {
 	
 	</div>
 	
+	<div id="allStocksDiv">
 
+		
 
-
+		<table style="text-align: left; border-collapse: collapse;">
+		<tr>
+		<th style="text-align: center; border:2px solid black;"><h3>Product ID</h3></th>
+		<th style="text-align: center;border:2px solid black;"><h3>Name</h3></th>
+		<th style="text-align: center;border:2px solid black;"><h3>Price</h3></th>
+		<th style="text-align: center;border:2px solid black;"><h3>Amount</h3></th>
+		<td> </td>
+		</tr>
+	
+	<% 	if(displayAllStocks) { 
+	
+			for(Product p : productListAsList ) { %>
+		<tr>
+		<td style="text-align:center;border:2px solid black;"> <%=p.getId() %>  </td>
+		<td style="text-align:left;border:2px solid black;padding-left: 5px; padding-right: 5px;"><%=p.getName() %></td>
+		<td style="text-align:left;border:2px solid black;padding-left: 5px; padding-right: 5px;">&nbsp;$&nbsp;<%=p.getPrice() %></td>
+		<td style="text-align:left;border:2px solid black;padding-left: 5px; padding-right: 5px;"> <%=p.getAmount() %></td>
+		<td style="text-align:center;"> 
+			<form method="post" action="Stock">
+				<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
+				<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">
+				<input type="hidden" name="lastName" value="<%=request.getAttribute("lastname") %>">
+				<input type="hidden" name="dob" value="<%=request.getAttribute("dob") %>">
+				<input type="hidden" name="productID" value="<%=p.getId() %>">
+				&nbsp;&nbsp;<input type="submit" name="displaySelectedStock" value="Go">
+				
+			</form>
+		</td>
+		</tr>
+	<% 	}
+	  }	
+	 %>	
+		
+		</table>
+	
+	</div>
 
 </div>
 
@@ -290,6 +358,21 @@ function displaySubDiv(id) {
     <%
        }  
     %>
+    
+    
+    <% if(displayAllStocks) { %>
+    
+    <script>
+    	
+    	document.getElementById('allStocksDiv').style.display = "block";
+    
+    </script>
+
+    
+    <%
+       }  
+    %>
+    
 
 </body>
 </html>
