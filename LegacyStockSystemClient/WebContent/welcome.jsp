@@ -212,7 +212,7 @@ function displaySubDiv(id) {
 		<tr>
 		<td style="text-align: right;"><h3> Product ID </h3> </td>
 		<td> &nbsp;&nbsp;</td>
-		<td> <input type="text" name="productID" disabled value="<%=productID %>"> </td>
+		<td> <input type="text" name="productID" readonly value="<%=productID %>"> </td>
 		<td> </td>
 		<td> </td>
 		</tr>
@@ -244,8 +244,9 @@ function displaySubDiv(id) {
 		</table>
 		<br>
 		<br>
-		<input type="submit" value="Save"> 
-		
+
+		<input type="submit" name="saveBtn" value="Save">
+
 		</form>
 	
 	</div>
