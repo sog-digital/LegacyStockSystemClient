@@ -44,6 +44,12 @@ public class StockServiceImplProxy implements com.sogeti.digital.lss.service.Sto
     return stockServiceImpl;
   }
   
+  public boolean update(com.sogeti.digital.lss.model.Product product) throws java.rmi.RemoteException{
+    if (stockServiceImpl == null)
+      _initStockServiceImplProxy();
+    return stockServiceImpl.update(product);
+  }
+  
   public boolean create(com.sogeti.digital.lss.model.Product product) throws java.rmi.RemoteException{
     if (stockServiceImpl == null)
       _initStockServiceImplProxy();
@@ -62,10 +68,10 @@ public class StockServiceImplProxy implements com.sogeti.digital.lss.service.Sto
     return stockServiceImpl.getStock(id);
   }
   
-  public boolean update(com.sogeti.digital.lss.model.Product product) throws java.rmi.RemoteException{
+  public boolean delete(int id) throws java.rmi.RemoteException{
     if (stockServiceImpl == null)
       _initStockServiceImplProxy();
-    return stockServiceImpl.update(product);
+    return stockServiceImpl.delete(id);
   }
   
   

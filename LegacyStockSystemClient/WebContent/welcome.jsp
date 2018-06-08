@@ -241,11 +241,18 @@ function displaySubDiv(id) {
 		<td> </td>
 		</tr>
 		
+		<tr style="height: 80px">
+		<td >  <input type="submit" name="saveBtn" value="Save"> </td> 
+		
+		<td style="text-align: center;" colspan="3">  <input type="submit" name="deleteBtn" value="Delete"> </td>
+		
+		<td>  <input type="button" name="cancel" value="Cancel" onclick="displaySubDiv('borderDiv')"> </td>
+		 
+		<tr>
+		
 		</table>
 		<br>
 		<br>
-
-		<input type="submit" name="saveBtn" value="Save">
 
 		</form>
 	
@@ -330,7 +337,7 @@ function displaySubDiv(id) {
 				<input type="hidden" name="lastName" value="<%=request.getAttribute("lastname") %>">
 				<input type="hidden" name="dob" value="<%=request.getAttribute("dob") %>">
 				<input type="hidden" name="productID" value="<%=p.getId() %>">
-				&nbsp;&nbsp;<input type="submit" name="displaySelectedStock" value="Go">
+				&nbsp;&nbsp;<input type="submit" name="findStock" value="Go">
 				
 			</form>
 		</td>
