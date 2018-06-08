@@ -54,10 +54,20 @@ public class ManageStock extends HttpServlet {
 		int productID = 0;
 		
 		String productIDParam = request.getParameter("productID");
+		System.out.println("raw product id : " +productIDParam);
+		
+		String saveBtnValue = request.getParameter("saveBtn");
+		System.out.println("raw Save btn value : " + saveBtnValue);
+		
+		if (saveBtnValue == null || saveBtnValue.equals("")) {
+			saveBtnValue = "-1";
+		}
+		System.out.println("Save btn value : " + saveBtnValue);
 		
 		if( productIDParam != null && !productIDParam.equals("null") && productIDParam.length() > 0 ) {
 			
 			productID = Integer.parseInt(productIDParam);
+			
 		}
 		
 		String allStocks = request.getParameter("allStocks");
@@ -74,7 +84,7 @@ public class ManageStock extends HttpServlet {
 			StockServiceImpl ssi = ssl.getStockServiceImpl();
 			
 		
-			if( productID > 0 ) {
+			if( productID > 0 && saveBtnValue.equals("-1") ) {
 				// find a stock 
 				
 				Product product = ssi.getStock(productID);
@@ -94,6 +104,23 @@ public class ManageStock extends HttpServlet {
 					request.setAttribute("allStocks", productList);
 				} else {
 					request.setAttribute("infoStr", stockNotFoundMsgStr);
+				}
+				
+				
+			} else if ( productID > 0 && !saveBtnValue.equals("-1") ) {
+				
+				Product updateProduct = new Product();
+				updateProduct.setId(productID);
+				updateProduct.setName(request.getParameter("name"));
+				updateProduct.setAmount(Integer.parseInt((String)request.getParameter("amount")));
+				updateProduct.setPrice(request.getParameter("price"));
+				
+				if(ssi.update(updateProduct)) {
+
+					request.setAttribute("infoStr", infoMsgStr);
+				} else {	
+
+					request.setAttribute("errorStr", errorStr);
 				}
 				
 				
