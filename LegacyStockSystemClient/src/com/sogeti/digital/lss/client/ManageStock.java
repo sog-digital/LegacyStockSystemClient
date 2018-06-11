@@ -24,8 +24,6 @@ public class ManageStock extends HttpServlet {
 	private static final String infoMsgStr = "Your request was successfull.";
 	private static final String errorStr = "Sorry! Error in processing your request.";
 	private static final String stockNotFoundMsgStr = "Sorry! No records found for your stock search. ";
-	
-
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -54,24 +52,28 @@ public class ManageStock extends HttpServlet {
 		int productID = 0;
 		
 		String productIDParam = request.getParameter("productID");
-		System.out.println("raw product id : " +productIDParam);
+		
+		String findBtnValue = request.getParameter("findStock");
+		if (findBtnValue == null || findBtnValue.equals("")) {
+			findBtnValue = "-1";
+		}
 		
 		String saveBtnValue = request.getParameter("saveBtn");
-		System.out.println("raw Save btn value : " + saveBtnValue);
-		
 		if (saveBtnValue == null || saveBtnValue.equals("")) {
 			saveBtnValue = "-1";
 		}
-		System.out.println("Save btn value : " + saveBtnValue);
+		
+		String deleteBtnValue = request.getParameter("deleteBtn");
+		if(deleteBtnValue == null || deleteBtnValue.equals("")) {
+			deleteBtnValue = "-1";
+		}
 		
 		if( productIDParam != null && !productIDParam.equals("null") && productIDParam.length() > 0 ) {
 			
-			productID = Integer.parseInt(productIDParam);
-			
+			productID = Integer.parseInt(productIDParam);			
 		}
 		
 		String allStocks = request.getParameter("allStocks");
-		
 		if( !(allStocks != null && !allStocks.equals("null") && allStocks.length() > 0 ) ) {
 			
 			allStocks = "";
@@ -84,7 +86,7 @@ public class ManageStock extends HttpServlet {
 			StockServiceImpl ssi = ssl.getStockServiceImpl();
 			
 		
-			if( productID > 0 && saveBtnValue.equals("-1") ) {
+			if( productID > 0 && findBtnValue.equals("Go") ) {
 				// find a stock 
 				
 				Product product = ssi.getStock(productID);
@@ -96,7 +98,7 @@ public class ManageStock extends HttpServlet {
 					request.setAttribute("infoStr", stockNotFoundMsgStr);
 				}
 				
-			} else if ( allStocks.length() > 0 ) {
+			} else if ( allStocks.length() > 0 ) { // Retrieve all stocks
 				
 				Product[] productList = ssi.getAllTheStocks();
 				if(productList != null ) {
@@ -107,7 +109,7 @@ public class ManageStock extends HttpServlet {
 				}
 				
 				
-			} else if ( productID > 0 && !saveBtnValue.equals("-1") ) {
+			} else if ( productID > 0 && saveBtnValue.equals("Save") ) { // update the stock
 				
 				Product updateProduct = new Product();
 				updateProduct.setId(productID);
@@ -124,8 +126,19 @@ public class ManageStock extends HttpServlet {
 				}
 				
 				
-			} else {
-				// create a stock
+			} else if( productID > 0 && deleteBtnValue.equals("Delete") ) { // delete the stock
+				
+				if(ssi.delete(productID)) {
+					
+					request.setAttribute("infoStr", infoMsgStr);
+				} else {	
+
+					request.setAttribute("errorStr", errorStr);
+				}
+				
+			}
+			else {
+				// create a new stock
 				Product product = new Product();
 				product.setName(request.getParameter("name"));
 				product.setAmount(Integer.parseInt((String)request.getParameter("amount")));

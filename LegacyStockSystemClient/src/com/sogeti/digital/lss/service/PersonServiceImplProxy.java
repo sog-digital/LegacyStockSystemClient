@@ -56,10 +56,10 @@ public class PersonServiceImplProxy implements com.sogeti.digital.lss.service.Pe
     return personServiceImpl.changePassword(person);
   }
   
-  public boolean login(java.lang.String email, java.lang.String password) throws java.rmi.RemoteException{
+  public boolean secureLogin(java.lang.String email, java.lang.String encryptedPassword) throws java.rmi.RemoteException{
     if (personServiceImpl == null)
       _initPersonServiceImplProxy();
-    return personServiceImpl.login(email, password);
+    return personServiceImpl.secureLogin(email, encryptedPassword);
   }
   
   

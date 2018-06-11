@@ -16,14 +16,27 @@
 }
 </style>
 
-</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
+<script src="passwordencryption.js"></script>
+
+</head>	
 <body>
 
-<font color='red' style='margin-left: 80px;'><b><%= request.getAttribute("errorStr") %></b></font>
+<%
+    String errorStr = (String)request.getAttribute("errorStr");
+    if(errorStr == null)
+    {
+        errorStr="";
+    }
+%>    
+
+
+<font color='red' style='margin-left: 80px;'><b><% out.println(errorStr); %></b></font>
 
 <Div id="loginForm">
 
-<form method="post" action="Validate">
+<form method="post" action="Validate" name="loginForm">
 
 <table>
 <tr>
@@ -37,18 +50,15 @@
 <tr>
 <td style="text-align:right;"> password </td>
 <td> &nbsp;&nbsp;</td>
-<td> <input type="password" name="pwd"></td>
+<td> <input type="password" name="pwd" id="pass"></td>
 <td> &nbsp;&nbsp;</td>
-<td> <input type="submit" value="Go"> </td>
+<td> <input type="submit" value="Go" onClick="encryptPasswordAndSubmit()"> </td>
 </tr>
 </table>
 
 </form>
 
 </Div>
-
-
-
 
 </body>
 </html>
