@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Password Encreyption Utility</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
+<script>
+
+function encryptPassword() {
+	var val = document.getElementById('pass').value; //assign password to a variable
+	var rkEncryptionKey = CryptoJS.enc.Base64
+			.parse('u/Gu5posvwDsXUnV5Zaq4g==');
+	var rkEncryptionIv = CryptoJS.enc.Base64
+			.parse('5D9r9ZVzEYYgha93/aUK2w==');
+	var utf8Stringified = CryptoJS.enc.Utf8.parse(val);
+	var encrypted = CryptoJS.AES.encrypt(utf8Stringified.toString(),
+			rkEncryptionKey, {
+				mode : CryptoJS.mode.CBC,
+				padding : CryptoJS.pad.Pkcs7,
+				iv : rkEncryptionIv
+			});
+	//document.loginForm.pwd.value = encrypted.ciphertext
+	//		.toString(CryptoJS.enc.Base64);
+	var encryptpass = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+	//alert("Your encrypted password is : '" + encryptpass +"'");
+	document.getElementById('encryptedPassDiv').innerHTML = "<h3> Your encrypted password is inside single quotes. : '<i>" +
+		encryptpass +"<i>'</h3>";
+	
+}
+
+</script>
+
+
+
+</head>
+<body>
+
+	<div id="encryptPassDiv">
+		
+		<table>
+
+		<tr>
+		<td style="text-align:right;"> <h3> Enter your Password </h3> </td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="text" name="pwd" id="pass"></td>
+		<td> &nbsp;&nbsp;</td>
+		<td> <input type="button" value="Go" onClick="encryptPassword()"> </td>
+		</tr>
+		</table>
+		
+	</div>
+	
+	<div id="encryptedPassDiv">
+	
+	</div>
+
+</body>
+</html>

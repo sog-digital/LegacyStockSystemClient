@@ -65,12 +65,11 @@
 <script>
 
 function displaySubDiv(id) {
-    var x = document.getElementById(id);
+
+	var x = document.getElementById(id);
     x.style.display = "block";
-    
 
     var subDivs = document.getElementById('borderDiv').querySelectorAll("Div");
-    
 	
     for( var i=0; i<subDivs.length; i++) {
     
@@ -82,9 +81,10 @@ function displaySubDiv(id) {
     
 }
 
-
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script src="passwordencryption.js"></script>
 
 </head>
 <body>
@@ -156,9 +156,6 @@ function displaySubDiv(id) {
     }
   
     %>
-    
-    
-    
 
 	<div id="appMsgDiv">
 		<font color='red' style='margin-left: 80px;'><b><% out.println(errorStr); %></b></font>
@@ -170,7 +167,7 @@ function displaySubDiv(id) {
 	<div id="changePassDiv">
 	
 	
-		<form method="post" action="ChangePass">
+		<form method="post" action="ChangePass" name="loginForm">
 		
 		<input type="hidden" name="personId" value="<%=request.getAttribute("personId") %>">
 		<input type="hidden" name="firstName" value="<%=request.getAttribute("firstname") %>">
@@ -189,9 +186,9 @@ function displaySubDiv(id) {
 		<tr>
 		<td style="text-align:right;"> <h3> Password </h3> </td>
 		<td> &nbsp;&nbsp;</td>
-		<td> <input type="password" name="pwd"></td>
+		<td> <input type="password" name="pwd" id="pass"></td>
 		<td> &nbsp;&nbsp;</td>
-		<td> <input type="submit" value="Go"> </td>
+		<td> <input type="submit" value="Go" onClick="encryptPasswordAndSubmit()"> </td>
 		</tr>
 		</table>
 		
@@ -310,8 +307,6 @@ function displaySubDiv(id) {
 	</div>
 	
 	<div id="allStocksDiv">
-
-		
 
 		<table style="text-align: left; border-collapse: collapse;">
 		<tr>

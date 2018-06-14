@@ -51,7 +51,7 @@ public class ValidateLoginDetails extends HttpServlet {
 	    	 PersonServiceImplServiceLocator psl = new PersonServiceImplServiceLocator();
 	    	 PersonServiceImpl psi = psl.getPersonServiceImpl();
 
-	    	 if(psi.login(email, password)) {
+	    	 if(psi.secureLogin(email, password)) {
 	    		 
 	    		 Person person = psi.read(email);
 	    		 request.setAttribute("firstname", person.getFirstName());
