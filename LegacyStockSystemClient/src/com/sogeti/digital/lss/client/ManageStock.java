@@ -143,10 +143,10 @@ public class ManageStock extends HttpServlet {
 				product.setName(request.getParameter("name"));
 				product.setAmount(Integer.parseInt((String)request.getParameter("amount")));
 				product.setPrice(request.getParameter("price"));
+				int stockid = ssi.create(product);
+				if( stockid > 0 ) {
 
-				if(ssi.create(product)) {
-
-					request.setAttribute("infoStr", infoMsgStr);
+					request.setAttribute("infoStr", infoMsgStr +". Your new stock id is :" +stockid);
 				} else {	
 
 					request.setAttribute("errorStr", errorStr);
