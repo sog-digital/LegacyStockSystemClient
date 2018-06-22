@@ -26,6 +26,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>LegacyStockSystemClient</finalName>
 	</build>
 	<dependencies>
 		<dependency>
